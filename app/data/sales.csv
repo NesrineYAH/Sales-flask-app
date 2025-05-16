@@ -1,0 +1,4 @@
+id,product_id,store_id,date,quantity,total_price
+1,1,1,2025-01-01,2,1600
+2,2,2,2025-01-05,1,150
+3,3,1,2025-01-10,4,300

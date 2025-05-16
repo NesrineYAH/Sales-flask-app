@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Rapport de Ventes PME</title>
+  </head>
+  <body>
+    <h1>Bienvenue sur l'analyse des ventes</h1>
+    <div>
+      <ul>
+        <li class="link"><a href="/produits">Voir les produits</a></li>
+        <li class="link"><a href="/ventes">Voir les ventes</a></li>
+        <li class="link"><a href="/magasins">Voir les magasins</a></li>
+      </ul>
+    </div>
+    <h2>Produits</h2>
+
+    <ul>
+      {% for p in produits %}
+      <li>{{ p[0] }} – {{ p[1] }} ({{ p[2] }}) : {{ p[3] }} €</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Magasins</h2>
+    <p><strong>Moyenne par commande :</strong> {{ moyenne }} €</p>
+    <ul>
+      {% for m in magasins %}
+      <li>{{ m[0] }} – {{ m[1] }}, {{ m[2] }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Ventes récentes</h2>
+    <ul>
+      {% for v in ventes %}
+      <li>
+        ID{{ v[0] }} : produit {{ v[1] }} vendu en magasin {{ v[2] }} le {{ v[3]
+        }} (quantité : {{ v[4] }}, total : {{ v[5] }} €)
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
