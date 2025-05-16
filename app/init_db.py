@@ -75,7 +75,7 @@ def load_csv_to_db(csv_file, table, columns):
         print(f"✅ {success_count} lignes insérées dans {table} depuis {csv_file}")
 
 # Chargement des fichiers CSV
-load_csv_to_db("products.csv", "produits", ["Date","ID Référence produit","Quantité","ID Magasin"
+load_csv_to_db("products.csv", "produits", ["Date","ID Reference produit","Quantité","ID Magasin"
 ])
 load_csv_to_db("stores.csv", "magasins", ["id", "name", "city", "region"])
 load_csv_to_db("sales.csv", "ventes", ["id", "product_id", "store_id", "date", "quantity", "total_price"])

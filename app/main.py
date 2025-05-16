@@ -7,15 +7,18 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "db", "ventes.db")
 
 
 
+
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row  # Pour accéder aux colonnes par nom
     return conn
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
-    
+
+
 @app.route("/produits")
 def produits():
     conn = get_db_connection()

@@ -3,15 +3,15 @@
   <tr>
     <th>ID</th>
     <th>Date</th>
-    <th>Référence ID</th>
+    <th>Reference ID</th>
     <th>Quantité</th>
     <th>ID Magasin</th>
   </tr>
   {% for produit in produit %}
   <tr>
-    <td>{{ produit.id }}</td>
     <td>{{ produit.date }}</td>
-    <td>{{ produit.id_produit }}</td>
+    <td>{{ produit.id }}</td>
+    <td>{{ produit.id_Reference_produit }}</td>
     <td>{{ produit.quantite }}</td>
     <td>{{ produit.id_magasin }}</td>
   </tr>
