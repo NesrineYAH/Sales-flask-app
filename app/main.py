@@ -5,42 +5,34 @@ import os
 app = Flask(__name__)
 DB_PATH = os.path.join(os.path.dirname(__file__), "db", "ventes.db")
 
-def fetch_all(table):
+
+
+def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
-    cur = conn.cursor()
-    cur.execute(f"SELECT * FROM {table}")
-    rows = cur.fetchall()
-    conn.close()
-    return rows
+    conn.row_factory = sqlite3.Row  # Pour accéder aux colonnes par nom
+    return conn
 
 @app.route("/")
 def index():
-    produits  = fetch_all("produits")
-    magasins  = fetch_all("magasins")
-    ventes    = fetch_all("ventes")
-    return render_template("index.html",
-                           produits=produits,
-                           magasins=magasins,
-                           ventes=ventes)
+    return render_template("index.html")
     
-
 @app.route("/produits")
 def produits():
-    conn = fetch_all()
+    conn = get_db_connection()
     produits = conn.execute("SELECT * FROM produits").fetchall()
     conn.close()
     return render_template("produits.html", produits=produits)
 
 @app.route("/ventes")
 def ventes():
-    conn = fetch_all()
+    conn = get_db_connection()
     ventes = conn.execute("SELECT * FROM ventes").fetchall()
     conn.close()
     return render_template("ventes.html", ventes=ventes)
 
 @app.route("/magasins")
 def magasins():
-    conn = fetch_all()
+    conn = get_db_connection()
     magasins = conn.execute("SELECT * FROM magasins").fetchall()
     conn.close()
     return render_template("magasins.html", magasins=magasins)

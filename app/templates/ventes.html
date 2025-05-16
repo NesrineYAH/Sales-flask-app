@@ -1,0 +1,19 @@
+<h1>Liste des Ventes</h1>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>ID Produit</th>
+    <th>ID Magasin</th>
+    <th>Date</th>
+    <th>Quantité</th>
+  </tr>
+  {% for vente in ventes %}
+  <tr>
+    <td>{{ vente.id }}</td>
+    <td>{{ vente.id_produit }}</td>
+    <td>{{ vente.id_magasin }}</td>
+    <td>{{ vente.date }}</td>
+    <td>{{ vente.quantite }}</td>
+  </tr>
+  {% endfor %}
+</table>

@@ -1,0 +1,17 @@
+<h1>Liste des Magasins</h1>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Ville</th>
+    <th>Région</th>
+  </tr>
+  {% for magasin in magasins %}
+  <tr>
+    <td>{{ magasin.id }}</td>
+    <td>{{ magasin.nom }}</td>
+    <td>{{ magasin.ville }}</td>
+    <td>{{ magasin.region }}</td>
+  </tr>
+  {% endfor %}
+</table>
