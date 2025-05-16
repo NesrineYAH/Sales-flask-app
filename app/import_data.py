@@ -43,7 +43,7 @@ def load_csv_to_db(csv_filename, table, columns):
 
 # Charger les trois CSV
 load_csv_to_db("products.csv", "produits",
-               ["id", "name", "category", "price"])
+             ["Date","ID Référence produit","Quantité","ID Magasin"])
 load_csv_to_db("stores.csv", "magasins",
                ["id", "name", "city", "region"])
 load_csv_to_db("sales.csv", "ventes",

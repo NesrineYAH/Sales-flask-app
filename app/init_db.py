@@ -20,12 +20,14 @@ cur = conn.cursor()
 
 # Création des tables
 cur.execute("""
-CREATE TABLE IF NOT EXISTS produits (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    category TEXT,
-    price REAL
+CREATE TABLE ventes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT,
+    id_produit TEXT,
+    quantite INTEGER,
+    id_magasin INTEGER
 )
+
 """)
 
 cur.execute("""
@@ -73,7 +75,8 @@ def load_csv_to_db(csv_file, table, columns):
         print(f"✅ {success_count} lignes insérées dans {table} depuis {csv_file}")
 
 # Chargement des fichiers CSV
-load_csv_to_db("products.csv", "produits", ["id", "name", "category", "price"])
+load_csv_to_db("products.csv", "produits", ["Date","ID Référence produit","Quantité","ID Magasin"
+])
 load_csv_to_db("stores.csv", "magasins", ["id", "name", "city", "region"])
 load_csv_to_db("sales.csv", "ventes", ["id", "product_id", "store_id", "date", "quantity", "total_price"])
 
