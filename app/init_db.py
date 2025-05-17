@@ -21,33 +21,33 @@ cur = conn.cursor()
 # Création des tables
 cur.execute("""
 CREATE TABLE produits (
-    ID_Reference_produit TEXT PRIMARY KEY AUTOINCREMENT,
-    date TEXT,
-    Quantite INTEGER,
-    ID_magasin INTEGER
-)
+    id_reference TEXT PRIMARY KEY,
+    nom TEXT,
+    prix REAL,
+    stock INTEGER
+);
+
 """)
 
 cur.execute("""
-CREATE TABLE IF NOT EXISTS magasins (
+CREATE TABLE magasins (
     id INTEGER PRIMARY KEY,
-    name TEXT,
-    city TEXT,
-    region TEXT
-)
+    Ville TEXT,
+    nombre_salaries INTEGER
+);
+
 """)
 
 cur.execute("""
-CREATE TABLE IF NOT EXISTS ventes (
-    id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    store_id INTEGER,
+CREATE TABLE ventes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT,
-    quantity INTEGER,
-    total_price REAL,
-    FOREIGN KEY(product_id) REFERENCES produits(id),
-    FOREIGN KEY(store_id) REFERENCES magasins(id)
-)
+    id_reference_produit TEXT,
+    quantite INTEGER,
+    id_magasin INTEGER,
+    FOREIGN KEY (id_reference_produit) REFERENCES produits(id_reference),
+    FOREIGN KEY (id_magasin) REFERENCES magasins(id)
+);
 """)
 
 # Fonction pour charger un CSV
@@ -73,10 +73,10 @@ def load_csv_to_db(csv_file, table, columns):
         print(f"✅ {success_count} lignes insérées dans {table} depuis {csv_file}")
 
 # Chargement des fichiers CSV
-load_csv_to_db("products.csv", "produits", ["Date","ID_Reference_produit","Quantite","ID Magasin"
+load_csv_to_db("products.csv", "produits", ["Date","ID Référence produit","Quantité","ID Magasin"
 ])
-load_csv_to_db("stores.csv", "magasins", ["id", "name", "city", "region"])
-load_csv_to_db("sales.csv", "ventes", ["id", "product_id", "store_id", "date", "quantity", "total_price"])
+load_csv_to_db("stores.csv", "magasins", ["ID Magasin", "Ville", "Nombre de salariés"])
+load_csv_to_db("sales.csv", "ventes", ["Date", "product_id", "store_id", "date", "quantity", "total_price"])
 
 # Finaliser
 conn.commit()
