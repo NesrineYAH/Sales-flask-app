@@ -1,17 +1,15 @@
 <h1>Liste des Magasins</h1>
 <table border="1">
   <tr>
-    <th>ID</th>
-    <th>Nom</th>
+    <th>ID Magasin</th>
     <th>Ville</th>
-    <th>Région</th>
+    <th>Nombre_de_salariés</th>
   </tr>
   {% for magasin in magasins %}
   <tr>
-    <td>{{ magasin.id }}</td>
-    <td>{{ magasin.nom }}</td>
-    <td>{{ magasin.ville }}</td>
-    <td>{{ magasin.region }}</td>
+    <td>{{ magasin["ID_Magasin"] }}</td>
+    <td>{{ magasin["Ville"] }}</td>
+    <td>{{ magasin["Nombre_de_salaries"] }}</td>
   </tr>
   {% endfor %}
 </table>

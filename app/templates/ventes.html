@@ -1,19 +1,17 @@
 <h1>Liste des Ventes</h1>
 <table border="1">
   <tr>
-    <th>ID</th>
-    <th>ID Produit</th>
-    <th>ID Magasin</th>
     <th>Date</th>
+    <th>ID Référence Produit</th>
     <th>Quantité</th>
+    <th>ID Magasin</th>
   </tr>
   {% for vente in ventes %}
   <tr>
-    <td>{{ vente.id }}</td>
-    <td>{{ vente.id_produit }}</td>
-    <td>{{ vente.id_magasin }}</td>
-    <td>{{ vente.date }}</td>
-    <td>{{ vente.quantite }}</td>
+    <td>{{ vente["Date"] }}</td>
+    <td>{{ vente["ID_produit"] }}</td>
+    <td>{{ vente["Quantite"] }}</td>
+    <td>{{ vente["ID_Magasin"] }}</td>
   </tr>
   {% endfor %}
 </table>

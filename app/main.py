@@ -5,19 +5,14 @@ import os
 app = Flask(__name__)
 DB_PATH = os.path.join(os.path.dirname(__file__), "db", "ventes.db")
 
-
-
-
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # Pour accéder aux colonnes par nom
+    conn.row_factory = sqlite3.Row
     return conn
-
 
 @app.route("/")
 def index():
     return render_template("index.html")
-
 
 @app.route("/produits")
 def produits():
@@ -40,5 +35,9 @@ def magasins():
     conn.close()
     return render_template("magasins.html", magasins=magasins)
 
+@app.errorhandler(500)
+def server_error(e):
+    return f"Erreur serveur : {e}", 500
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)

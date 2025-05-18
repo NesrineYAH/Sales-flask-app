@@ -1,85 +1,87 @@
 import sqlite3
-import csv
 import os
+import csv
 
 # Chemins
-DB_PATH = "db/ventes.db"
-DATA_PATH = "data"
+BASE_DIR = os.path.dirname(__file__)
+DB_DIR   = os.path.join(BASE_DIR, "db")
+DB_PATH  = os.path.join(DB_DIR, "ventes.db")
+DATA_DIR = os.path.join(BASE_DIR, "data")
 
-# Supprimer l'ancienne base de données si elle existe (au bon chemin)
-if os.path.exists(DB_PATH):
-    os.remove(DB_PATH)
+# Création du dossier "db" si nécessaire
+os.makedirs(DB_DIR, exist_ok=True)
 
-# S'assurer que les dossiers existent
-os.makedirs("data", exist_ok=True)
-os.makedirs("db", exist_ok=True)
-
-# Connexion à SQLite
+# Connexion à la base
 conn = sqlite3.connect(DB_PATH)
 cur = conn.cursor()
+
+# Suppression des tables si elles existent
+cur.execute("DROP TABLE IF EXISTS produits")
+cur.execute("DROP TABLE IF EXISTS magasins")
+cur.execute("DROP TABLE IF EXISTS ventes")
 
 # Création des tables
 cur.execute("""
 CREATE TABLE produits (
-    id_reference TEXT PRIMARY KEY,
     nom TEXT,
+    ID_produit TEXT,
     prix REAL,
     stock INTEGER
-);
-
+)
 """)
 
 cur.execute("""
 CREATE TABLE magasins (
-    id INTEGER PRIMARY KEY,
+    ID_Magasin INTEGER PRIMARY KEY,
     Ville TEXT,
-    nombre_salaries INTEGER
-);
-
+    Nombre_de_salaries INTEGER
+)
 """)
 
 cur.execute("""
 CREATE TABLE ventes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT,
-    id_reference_produit TEXT,
+    ID_produit TEXT,
     quantite INTEGER,
-    id_magasin INTEGER,
-    FOREIGN KEY (id_reference_produit) REFERENCES produits(id_reference),
-    FOREIGN KEY (id_magasin) REFERENCES magasins(id)
-);
+    id_magasin INTEGER
+)
 """)
 
-# Fonction pour charger un CSV
-def load_csv_to_db(csv_file, table, columns):
-    path = os.path.join(DATA_PATH, csv_file)
-    if not os.path.exists(path):
-        print(f"❌ Fichier introuvable : {path}")
-        return
-
-    with open(path, newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        rows = [tuple(row[col] for col in columns) for row in reader]
-        placeholders = ','.join(['?'] * len(columns))
-
-        success_count = 0
-        for row in rows:
-            try:
-                cur.execute(f"INSERT OR IGNORE INTO {table} ({','.join(columns)}) VALUES ({placeholders})", row)
-                success_count += 1
-            except Exception as e:
-                print(f"❌ Erreur insertion {row} → {e}")
-
-        print(f"✅ {success_count} lignes insérées dans {table} depuis {csv_file}")
-
-# Chargement des fichiers CSV
-load_csv_to_db("products.csv", "produits", ["Date","ID Référence produit","Quantité","ID Magasin"
-])
-load_csv_to_db("stores.csv", "magasins", ["ID Magasin", "Ville", "Nombre de salariés"])
-load_csv_to_db("sales.csv", "ventes", ["Date", "product_id", "store_id", "date", "quantity", "total_price"])
-
-# Finaliser
 conn.commit()
-conn.close()
+print("✅ Base de données créée avec succès.\n")
 
-print("✅ Base de données SQLite initialisée avec succès.")
+# --- Fonction d'importation CSV ---
+def load_csv_to_db(csv_path, table, columns):
+    print(f"📥 Importation de {os.path.basename(csv_path)} dans la table {table}")
+    with open(csv_path, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        print("Colonnes trouvées dans le CSV :", reader.fieldnames)
+        rows = [tuple(row[col].strip() for col in columns) for row in reader]
+        placeholders = ",".join("?" * len(columns))
+        sql = f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})"
+        cur.executemany(sql, rows)
+        conn.commit()
+        print(f"✅ {len(rows)} lignes insérées dans {table}.\n")
+
+# --- Chargement des données ---
+load_csv_to_db(
+    os.path.join(DATA_DIR, "products.csv"),
+    "produits",
+    ["Nom", "ID_produit", "Prix", "Stock"]
+)
+
+load_csv_to_db(
+    os.path.join(DATA_DIR, "stores.csv"),
+    "magasins",
+    ["ID_Magasin", "Ville", "Nombre_de_salaries"]
+)
+
+load_csv_to_db(
+    os.path.join(DATA_DIR, "sales.csv"),
+    "ventes",
+    ["Date", "ID_produit", "Quantite", "ID_Magasin"]             
+)
+
+conn.close()
+print("✅ Tous les fichiers CSV ont été importés avec succès.")

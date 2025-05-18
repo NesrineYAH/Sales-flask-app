@@ -1,18 +1,17 @@
-<h1>Liste des Ventes</h1>
+<h1>Liste des Produits</h1>
 <table border="1">
   <tr>
-    <th>ID</th>
-    <th>Date</th>
-    <th>ID Reference produit</th>
-    <th>Quantité</th>
-    <th>ID Magasin</th>
+    <th>ID Référence Produit</th>
+    <th>Nom</th>
+    <th>Prix</th>
+    <th>Stock</th>
   </tr>
-  {% for produit in produit %}
+  {% for produit in produits %}
   <tr>
-    <td>{{ produit.Date }}</td>
-    <td>{{ produit.ID_Référence_produit }}</td>
-    <td>{{ produit.Quantité }}</td>
-    <td>{{ produit.ID_magasin }}</td>
+    <td>{{ produit["Nom"] }}</td>
+    <td>{{ produit["ID_produit"] }}</td>
+    <td>{{ produit["Prix"] }}</td>
+    <td>{{ produit["Stock"] }}</td>
   </tr>
   {% endfor %}
 </table>
