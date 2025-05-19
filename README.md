@@ -12,3 +12,26 @@ Ce projet a pour but de mettre en place une architecture conteneurisée (via Doc
 
 ## 🗂️ Structure du projet
 ![alt text](image-1.png)
+
+<h2>📊 Données utilisées  </h2>
+
+- products.csv → informations sur les produits
+- stores.csv → informations sur les magasins
+- sales.csv → ventes journalières
+
+<h2>🧱 Base de données </h2>
+
+- produits(id, nom, prix, stock)
+- magasins(id, ville, nombre_salaries)
+- ventes(id, id_produit, id_magasin, date, quantite)
+
+ Création automatique via init_db.py
+
+<h2>Lancement du projet </h2>
+
+1. Construire et lancer avec Docker : docker-compose up --build
+2. Initialiser la base de données : cd app
+app/python app/init_db.py
+
+
+
