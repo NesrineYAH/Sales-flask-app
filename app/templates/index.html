@@ -2,42 +2,96 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../style.css" />
-    <title>Rapport de Ventes PME</title>
+    <title>
+      Tableau de bord - Analyse des vente réalisé par la développeuse NESRINE
+      BEKKAR YAHOUM
+    </title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      header {
+        background-color: #4caf50;
+        color: white;
+        padding: 20px 0;
+      }
+
+      h1 {
+        margin: 0;
+      }
+
+      main {
+        padding: 40px 20px;
+      }
+
+      .menu {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+
+      .menu a {
+        display: inline-block;
+        background-color: #ffffff;
+        border: 2px solid #4caf50;
+        color: #4caf50;
+        padding: 15px 25px;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .menu a:hover {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      footer {
+        margin-top: 60px;
+        padding: 20px;
+        font-size: 0.9em;
+        color: #888;
+      }
+      li {
+        list-style-type: none;
+      }
+    </style>
   </head>
   <body>
-    <h1>Bienvenue sur l'analyse des ventes</h1>
-    <div>
+    <header>
+      <h1>📊 Tableau de bord des ventes</h1>
+      <strong> réalisé par la développeuse NESRINE BEKKAR YAHOUM </strong>
+    </header>
+
+    <main>
+      <p>
+        Bienvenue dans l'application d’analyse des ventes. Utilisez le menu
+        ci-dessous pour naviguer
+      </p>
+
+      <div class="menu">
+        <a href="/produits">🛍️ Produits</a>
+        <a href="/ventes">📈 Ventes</a>
+        <a href="/magasins">🏬 Magasins</a>
+      </div>
+    </main>
+
+    <footer>
       <ul>
-        <li class="link"><a href="/produits">Voir les produits</a></li>
-        <li class="link"><a href="/ventes">Voir les ventes</a></li>
-        <li class="link"><a href="/magasins">Voir les magasins</a></li>
+        <li>&copy; 2025 - Projet d’analyse des ventes</li>
+        <li>
+          Projet pour la préparation à la journée de sélection pour le parcours
+          de formation Data Engineer.
+        </li>
       </ul>
-    </div>
-    <h2>Produits</h2>
-
-    <ul>
-      {% for p in produits %}
-      <li>{{ p[0] }} – {{ p[1] }} ({{ p[2] }}) : {{ p[3] }} €</li>
-      {% endfor %}
-    </ul>
-
-    <h2>Magasins</h2>
-    <p><strong>Moyenne par commande :</strong> {{ moyenne }} €</p>
-    <ul>
-      {% for m in magasins %}
-      <li>{{ m[0] }} – {{ m[1] }}, {{ m[2] }}</li>
-      {% endfor %}
-    </ul>
-
-    <h2>Ventes récentes</h2>
-    <ul>
-      {% for v in ventes %}
-      <li>
-        ID{{ v[0] }} : produit {{ v[1] }} vendu en magasin {{ v[2] }} le {{ v[3]
-        }} (quantité : {{ v[4] }}, total : {{ v[5] }} €)
-      </li>
-      {% endfor %}
-    </ul>
+    </footer>
   </body>
 </html>

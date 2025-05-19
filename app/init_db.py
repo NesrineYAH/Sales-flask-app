@@ -40,11 +40,10 @@ CREATE TABLE magasins (
 
 cur.execute("""
 CREATE TABLE ventes (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date TEXT,
-    id_reference_produit TEXT,
-    quantite INTEGER,
-    id_magasin INTEGER
+Date TEXT,
+    ID_produit TEXT PRIMARY KEY AUTOINCREMENT,
+    Quantite INTEGER,
+    ID_Magasin INTEGER
 )
 """)
 
