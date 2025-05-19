@@ -30,8 +30,22 @@ Ce projet a pour but de mettre en place une architecture conteneurisée (via Doc
 <h2>Lancement du projet </h2>
 
 1. Construire et lancer avec Docker : docker-compose up --build
-2. Initialiser la base de données : cd app
-app/python app/init_db.py
+2. Initialiser la base de données SQLite et importe les données CSV : python app/init_db.py
+3. Accès au http://localhost:5000 :    python main.py
+4. Vérifie le contenu actuel de la base ventes.db
+
+<h2>Interface utilisateur </h2>
+Accès à l’interface via :
+-  http://localhost:5000 → Page d’accueil
+-  http://localhost:5000/produits → Liste des produits
+-  http://localhost:5000/ventes → Liste des ventes
+-  http://localhost:5000/magasins → Liste des magasins 
+
+
+
+
+
+
 
 
 
