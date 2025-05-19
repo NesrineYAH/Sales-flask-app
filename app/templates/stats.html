@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>📊 Statistiques des ventes</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        max-width: 600px;
+        margin: auto;
+      }
+      li {
+        background: white;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-left: 5px solid #007bff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📊 Résultats d'analyse</h1>
+    <ul>
+      <li>
+        💰 <strong>Total des ventes :</strong> {{ resultats.total_ventes }} €
+      </li>
+      <li>
+        🛒 <strong>Nombre total de commandes :</strong> {{
+        resultats.nombre_commandes }}
+      </li>
+      <li>
+        📈 <strong>Produit le plus vendu :</strong> {{ resultats.produit_top }}
+      </li>
+      <li>
+        🏪 <strong>Magasin le plus performant :</strong> {{
+        resultats.magasin_top }}
+      </li>
+      <li>
+        📆 <strong>Période la plus active :</strong> {{ resultats.periode_top }}
+      </li>
+    </ul>
+  </body>
+</html>

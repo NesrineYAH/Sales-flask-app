@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from analyze import analyser_ventes_sql
 import sqlite3
 import os
 
@@ -34,6 +35,12 @@ def magasins():
     magasins = conn.execute("SELECT * FROM magasins").fetchall()
     conn.close()
     return render_template("magasins.html", magasins=magasins)
+
+@app.route("/stats")
+def stats():
+    resultats = analyser_ventes_sql()
+    return render_template("stats.html", resultats=resultats)
+
 
 @app.errorhandler(500)
 def server_error(e):
