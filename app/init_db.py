@@ -15,12 +15,11 @@ os.makedirs(DB_DIR, exist_ok=True)
 conn = sqlite3.connect(DB_PATH)
 cur = conn.cursor()
 
-# Suppression des tables si elles existent
 cur.execute("DROP TABLE IF EXISTS produits")
 cur.execute("DROP TABLE IF EXISTS magasins")
 cur.execute("DROP TABLE IF EXISTS ventes")
 
-# Création des tables
+
 cur.execute("""
 CREATE TABLE produits (
     nom TEXT,
