@@ -55,7 +55,7 @@ def stats():
         resultats = analyser_ventes_sql()  # Doit retourner {"labels": [...], "data": [...]}
         labels = resultats.get("labels", [])
         data = resultats.get("data", [])
-        return render_template("stats.html", labels=labels, data=data)
+        return render_template("stats.html", resultats=resultats, labels=labels, data=data)
     except Exception as e:
         app.logger.error(f"Erreur lors de l'analyse des ventes : {e}")
         return f"Erreur lors de l'analyse des ventes : {e}", 500
