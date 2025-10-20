@@ -91,7 +91,7 @@ prix_produits = {}
 with open(os.path.join("data", "products.csv"), newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
-        prix_produits[row["ID_produit"]] = float(row["Prix"])
+        prix_produits[row["ID_produit"]] = float(row["Prix"])   # le montant est dicémal
 
 # Charger sales.csv avec calcul du total_price
 with open(os.path.join("data", "sales.csv"), newline='', encoding='utf-8') as f:
@@ -99,7 +99,7 @@ with open(os.path.join("data", "sales.csv"), newline='', encoding='utf-8') as f:
     ventes = []
     for row in reader:
         ref = row["ID_produit"]
-        qte = int(row["Quantite"])
+        qte = int(row["Quantite"])  # nb de Quantite entier 
         prix = prix_produits.get(ref, 0)
         total = round(qte * prix, 2)
         ventes.append((

@@ -3,12 +3,18 @@
 services:
   flask-app:
     build: ./app
+    container_name: app  # 👈 important pour que NGINX reconnaisse "app" comme nom d'hôte
     ports:
       - "5000:5000"
     volumes:
       - ./app:/app
     environment:
       - FLASK_ENV=development
+      - FLASK_APP=main.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5000
+    command: flask run  # 👈 évite l'erreur "= main"
+
 
   nginx:
     image: nginx:latest
