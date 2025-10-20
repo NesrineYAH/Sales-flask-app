@@ -1,16 +1,27 @@
 from database import get_connection
+import sqlite3, os
+
+def get_connection():
+    DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "db", "ventes.db")
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
 
 def analyser_ventes_sql():
     conn = get_connection()
     cur = conn.cursor()
 
-    # Total des ventes et nombre de commandes
+   # Total des ventes et nombre de commandes
     cur.execute("SELECT COUNT(*) AS nb, SUM(total_price) AS total FROM ventes")
     row = cur.fetchone()
-   # nb = row["nb"]
-    nb = row["nb"] or 0        # à ajouter pour éviter None
-    total = row["total"] or 0
-    moyenne= round(total / nb, 2) if nb > 0 else 0,
+
+    nb = row["nb"] if row and row["nb"] is not None else 0
+    total = row["total"] if row and row["total"] is not None else 0.0
+
+    # Calcul sécurisé de la moyenne
+    moyenne = round(total / nb, 2) if nb > 0 else 0.0
+
 
     # Produit le plus vendu
     cur.execute("""
@@ -47,6 +58,8 @@ def analyser_ventes_sql():
     periode_row = cur.fetchone()
     periode_top = periode_row["mois"] if periode_row else "Inconnue"
 
+  
+
     # 📊 Données pour graphique : ventes par produit
     cur.execute("""
         SELECT p.nom, SUM(v.total_price) AS total
@@ -56,20 +69,18 @@ def analyser_ventes_sql():
         ORDER BY total DESC
     """)
     rows = cur.fetchall()
-    labels = [row["nom"] for row in rows]
-    data = [round(row["total"], 2) for row in rows]
+    labels = [row["nom"] for row in rows] if rows else []
+    data = [round(row["total"], 2) for row in rows if row["total"] is not None] if rows else []
 
     conn.close()
 
     return {
-        "total_ventes": round(total, 2),
+        "total_ventes": round(total, 2) if total is not None else 0.0,
         "nombre_commandes": nb,
         "moyenne": moyenne,
         "produit_top": produit_top,
         "magasin_top": magasin_top,
         "periode_top": periode_top,
-        "labels": labels,  # Pour Chart.js
-        "data": data       # Pour Chart.js
+        "labels": labels,
+        "data": data
     }
-
-# update 20/10/2025
