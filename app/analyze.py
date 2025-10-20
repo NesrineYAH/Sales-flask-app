@@ -7,8 +7,10 @@ def analyser_ventes_sql():
     # Total des ventes et nombre de commandes
     cur.execute("SELECT COUNT(*) AS nb, SUM(total_price) AS total FROM ventes")
     row = cur.fetchone()
-    nb = row["nb"]
+   # nb = row["nb"]
+    nb = row["nb"] or 0        # à ajouter pour éviter None
     total = row["total"] or 0
+    moyenne= round(total / nb, 2) if nb > 0 else 0,
 
     # Produit le plus vendu
     cur.execute("""
@@ -62,7 +64,7 @@ def analyser_ventes_sql():
     return {
         "total_ventes": round(total, 2),
         "nombre_commandes": nb,
-        "moyenne": round(total / nb, 2) if nb > 0 else 0,
+        "moyenne": moyenne,
         "produit_top": produit_top,
         "magasin_top": magasin_top,
         "periode_top": periode_top,
