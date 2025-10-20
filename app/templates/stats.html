@@ -7,6 +7,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -32,6 +33,14 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         font-size: 1.1rem;
       }
+      .chart-container {
+        max-width: 800px;
+        margin: 3rem auto;
+        background: white;
+        padding: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
     </style>
   </head>
   <body>
@@ -55,5 +64,40 @@
         📆 <strong>Période la plus active :</strong> {{ resultats.periode_top }}
       </li>
     </ul>
+
+    <div class="chart-container">
+      <h2 style="text-align: center">📦 Ventes par produit</h2>
+      <canvas id="ventesChart" width="600" height="400"></canvas>
+    </div>
+
+    <script>
+      const labels = {{ resultats.labels | tojson }};
+      const data = {{ resultats.data | tojson }};
+
+      const config = {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Montant des ventes (€)',
+            data: data,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      };
+
+      new Chart(document.getElementById('ventesChart'), config);
+    </script>
   </body>
 </html>
+<!-- update 20/10/2025 -->
