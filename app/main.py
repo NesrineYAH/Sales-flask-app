@@ -47,11 +47,15 @@ def magasins():
         return render_template("magasins.html", magasins=magasins)
     return "Erreur de connexion à la base de données", 500
 
+# update 20/10/2025
+
 @app.route("/stats")
 def stats():
     try:
-        resultats = analyser_ventes_sql()
-        return render_template("stats.html", resultats=resultats)
+        resultats = analyser_ventes_sql()  # Doit retourner {"labels": [...], "data": [...]}
+        labels = resultats.get("labels", [])
+        data = resultats.get("data", [])
+        return render_template("stats.html", labels=labels, data=data)
     except Exception as e:
         app.logger.error(f"Erreur lors de l'analyse des ventes : {e}")
         return f"Erreur lors de l'analyse des ventes : {e}", 500
@@ -59,6 +63,8 @@ def stats():
 @app.errorhandler(500)
 def server_error(e):
     return f"Erreur serveur : {e}", 500
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -45,6 +45,18 @@ def analyser_ventes_sql():
     periode_row = cur.fetchone()
     periode_top = periode_row["mois"] if periode_row else "Inconnue"
 
+    # 📊 Données pour graphique : ventes par produit
+    cur.execute("""
+        SELECT p.nom, SUM(v.total_price) AS total
+        FROM ventes v
+        JOIN produits p ON v.ID_produit = p.ID_produit
+        GROUP BY p.nom
+        ORDER BY total DESC
+    """)
+    rows = cur.fetchall()
+    labels = [row["nom"] for row in rows]
+    data = [round(row["total"], 2) for row in rows]
+
     conn.close()
 
     return {
@@ -53,5 +65,9 @@ def analyser_ventes_sql():
         "moyenne": round(total / nb, 2) if nb > 0 else 0,
         "produit_top": produit_top,
         "magasin_top": magasin_top,
-        "periode_top": periode_top
+        "periode_top": periode_top,
+        "labels": labels,  # Pour Chart.js
+        "data": data       # Pour Chart.js
     }
+
+# update 20/10/2025
