@@ -3,9 +3,14 @@ from flask import Flask, render_template
 from analyze import analyser_ventes_sql
 import sqlite3
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 
 app = Flask(__name__)
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "db", "ventes.db")
+DB_PATH = os.getenv("DB_PATH")
 
 def get_db_connection():
     try:

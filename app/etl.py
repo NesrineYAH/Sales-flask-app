@@ -1,9 +1,11 @@
 import pandas as pd
 import sqlite3
 import os
+from dotenv import load_dotenv
 
-# 📍 Définir le chemin de la base de données SQLite
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "db", "ventes.db")
+load_dotenv()
+DB_PATH = os.getenv("DB_PATH")
+
 
 
 def importer_nouvelles_ventes(fichier_csv):

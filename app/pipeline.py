@@ -3,7 +3,7 @@ from etl import importer_nouvelles_ventes, calculer_total_ventes, verifier_integ
 
 def pipeline_journalier():
     print("🚀 Lancement du pipeline data...")
-    importer_nouvelles_ventes("data/ventes_jour.csv")
+    importer_nouvelles_ventes("./data/ventes_jour.csv")
     calculer_total_ventes()
     verifier_integrite()
     print("Pipeline terminé.")
