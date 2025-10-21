@@ -56,6 +56,10 @@
         💰 <strong>Total des ventes :</strong> {{ resultats.total_ventes }} €
       </li>
       <li>
+        💰 <strong>Total des ventes (chiffre d'affaire):</strong> {{
+        resultats.chiffre_affaires }} €
+      </li>
+      <li>
         🛒 <strong>Nombre total de commandes :</strong> {{
         resultats.nombre_commandes }}
       </li>
@@ -104,6 +108,17 @@
 
       new Chart(document.getElementById('ventesChart'), config);
     </script>
+    <div
+      class="totals-produits"
+      style="max-width: 600px; margin: auto; margin-top: 2rem"
+    >
+      <h2 style="text-align: center">💵 Total par produit</h2>
+      <ul>
+        {% for item in resultats.totals_par_produit %}
+        <li>{{ item.nom }} : {{ item.total }} €</li>
+        {% endfor %}
+      </ul>
+    </div>
   </body>
 </html>
 <!-- update 20/10/2025 -->

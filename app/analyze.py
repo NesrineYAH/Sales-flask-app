@@ -1,6 +1,7 @@
 from database import get_connection
 import sqlite3, os
 
+
 def get_connection():
     DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "db", "ventes.db")
     conn = sqlite3.connect(DB_PATH)
@@ -12,16 +13,17 @@ def analyser_ventes_sql():
     conn = get_connection()
     cur = conn.cursor()
 
-   # Total des ventes et nombre de commandes
-    cur.execute("SELECT COUNT(*) AS nb, SUM(total_price) AS total FROM ventes")
+    # 💰 Chiffre d'affaires global
+    cur.execute("""
+        SELECT SUM(v.quantite * p.prix) AS total_ventes, COUNT(*) AS nb
+        FROM ventes v
+        JOIN produits p ON v.ID_produit = p.ID_produit
+    """)
     row = cur.fetchone()
 
+    total = row["total_ventes"] if row and row["total_ventes"] is not None else 0.0
     nb = row["nb"] if row and row["nb"] is not None else 0
-    total = row["total"] if row and row["total"] is not None else 0.0
-
-    # Calcul sécurisé de la moyenne
     moyenne = round(total / nb, 2) if nb > 0 else 0.0
-
 
     # Produit le plus vendu
     cur.execute("""
@@ -37,8 +39,9 @@ def analyser_ventes_sql():
 
     # Magasin le plus performant
     cur.execute("""
-        SELECT m.Ville, SUM(v.total_price) AS total
+        SELECT m.Ville, SUM(v.quantite * p.prix) AS total
         FROM ventes v
+        JOIN produits p ON v.ID_produit = p.ID_produit
         JOIN magasins m ON v.ID_Magasin = m.ID_Magasin
         GROUP BY m.Ville
         ORDER BY total DESC
@@ -58,29 +61,36 @@ def analyser_ventes_sql():
     periode_row = cur.fetchone()
     periode_top = periode_row["mois"] if periode_row else "Inconnue"
 
-  
-
     # 📊 Données pour graphique : ventes par produit
     cur.execute("""
-        SELECT p.nom, SUM(v.total_price) AS total
+        SELECT p.nom, SUM(v.quantite * p.prix) AS total
         FROM ventes v
         JOIN produits p ON v.ID_produit = p.ID_produit
         GROUP BY p.nom
         ORDER BY total DESC
     """)
     rows = cur.fetchall()
+
     labels = [row["nom"] for row in rows] if rows else []
     data = [round(row["total"], 2) for row in rows if row["total"] is not None] if rows else []
 
+    # Détail des totaux par produit
+    totals_par_produit = [
+        {"nom": row["nom"], "total": round(row["total"], 2)}
+        for row in rows if row["total"] is not None
+    ]
+
+    # ✅ On ferme la connexion à la fin
     conn.close()
 
     return {
-        "total_ventes": round(total, 2) if total is not None else 0.0,
+        "chiffre_affaires": round(total, 2),
         "nombre_commandes": nb,
         "moyenne": moyenne,
         "produit_top": produit_top,
         "magasin_top": magasin_top,
         "periode_top": periode_top,
         "labels": labels,
-        "data": data
+        "data": data,
+        "totals_par_produit": totals_par_produit
     }
