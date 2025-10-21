@@ -89,3 +89,16 @@ Via schedule.py et la variable .env :
 
 
 
+<H2>📈 🧰 Technologies utilisées</H2> 
+
+<ul> 
+<li>Python (pandas, sqlite3, Flask) </li>
+<li>Docker / Docker Compose</li>
+<li>Chart.js pour visualisation des ventes </li>
+<li>Produit le plus vendu </li>
+<li> schedule pour automatisation du pipeline</li>
+<li>logging pour suivi ETL</li>
+</ul> 
+
+
+
