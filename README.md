@@ -29,9 +29,20 @@ Mettre en place un pipeline ETL automatisé avec logs pour suivre l’intégrit�
 <ul>
 <li>produits (ID_produit, nom, prix, stock)</li>
 <li>magasins (ID_magasin, ville, nombre_salaries)</li>
+<li>ventes (ID_vente, ID_produit, ID_magasin, date, quantite, total_price)</li>
+<li>Mise à jours ventes de chaque jour</li>
 </ul>
+<p>La base SQLite est créée automatiquement via init_db.py et importée depuis les fichiers CSV. </p>
 
-
-
-
+<H2> ⚙️ Pipeline ETL </h2> 
+<ul>
+<li>1.Lecture du fichier CSV (ventes_jour.csv ou fichier test).</li>
+<li>2.Insertion des ventes dans la table ventes.</li>
+<li>3.Calcul du total des ventes par produit (quantite * prix).</li>
+<li>3.Mise à jour de la colonne total_price dans la base.</li>
+<li>4.Vérification de l’intégrité des données (pas de produits inexistants).</li>
+<li>5.Vérification de l’intégrité des données (pas de produits inexistants).</li>
+<li>5.Écriture des logs dans logs/etl.log avec horodatage et succès/erreur.</li>
+</ul>
+<p>La base SQLite est créée automatiquement via init_db.py 
 
