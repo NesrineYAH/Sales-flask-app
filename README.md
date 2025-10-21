@@ -44,5 +44,48 @@ Mettre en place un pipeline ETL automatisé avec logs pour suivre l’intégrit�
 <li>5.Vérification de l’intégrité des données (pas de produits inexistants).</li>
 <li>5.Écriture des logs dans logs/etl.log avec horodatage et succès/erreur.</li>
 </ul>
-<p>La base SQLite est créée automatiquement via init_db.py 
+
+
+<H2>Lancer manuellement le pipeline </H2>
+<strong> python run_etl.py </strong>
+<ul>
+<li>Le fichier etl.log sera créé automatiquement si le dossier logs/ existe.</li>
+<li> Les messages typiques dans le log :</li>
+</ul> 
+<img src="./console_Termianl.png"  alt ="consol de logs terminal" />
+
+<H2>Automatisation quotidienne (optionnelle) </H2>
+Via schedule.py et la variable .env :
+<img src="./Schedule.png"  alt ="<img src="./Schedule.png"  alt ="" />
+ />
+
+<H2>Automatisation quotidienne (optionnelle) </H2>
+<H3> Construire et lancer avec Docker : </H3>
+
+<img src="./docker compose.png"  alt ="docker   " />
+<H3> Lancer l'application Flask  : </H3>
+<img src="./python main.py.png"  alt ="python main" />
+
+<H2>Accéder à l’interface web :</H2> 
+<ul> 
+<li> Page d’accueil : http://localhost:5000</li>
+<li> Liste des produits : http://localhost:5000/produits <li>
+<li>Liste des ventes : http://localhost:5000/ventes </li>
+<li>Liste des magasins : http://localhost:5000/magasins </li>
+<li>Statistiques et graphique : http://localhost:5000/stats</li>
+</ul> 
+
+
+<H2>📈 Analyse et statistiques:</H2> 
+
+<ul> 
+<li>Total des ventes par produit </li>
+<li>Chiffre d’affaires global</li>
+<li>Produit le plus vendu </li>
+<li>Produit le plus vendu </li>
+<li> Période (mois) la plus active</li>
+<li>Graphique des ventes par produit (Chart.js intégré dans stats.html)</li>
+</ul> 
+
+
 

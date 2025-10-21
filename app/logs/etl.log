@@ -1,2 +1,4 @@
 2025-10-21 12:04:31,724 - \U0001f680 Lancement du pipeline ETL pour le fichier ./data/ventes_jour.csv
 2025-10-21 12:04:31,736 - \u2705 Pipeline ETL exécuté avec succès
+2025-10-21 12:32:18,402 - \U0001f680 Lancement du pipeline ETL pour le fichier ./data/ventes_jour.csv
+2025-10-21 12:32:18,422 - \u2705 Pipeline ETL exécuté avec succès
